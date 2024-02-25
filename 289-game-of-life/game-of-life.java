@@ -1,28 +1,73 @@
 class Solution {
-   public void gameOfLife(int[][] board) {
-    int rows = board.length, cols = board[0].length;
-    int[][] tempBoard = new int[rows][cols];                                             // we will first update values in this temporary matrix
-    for(int r = 0; r < rows; r++){
-        for(int c = 0; c < cols; c++){
-            int liveNeighbors = neighbor(board, r-1, c-1) + neighbor(board, r-1, c) + neighbor(board, r-1, c+1) + neighbor(board, r, c+1) + 
-                                neighbor(board, r+1, c+1) + neighbor(board, r+1, c) + neighbor(board, r+1, c-1) + neighbor(board, r, c-1);
-            //System.out.println("cell: ("+r+","+c+") ,  liveNeighbors: "+liveNeighbors);
-            if(board[r][c] == 1){ 
-                tempBoard[r][c] = (liveNeighbors < 2 || liveNeighbors > 3) ? 0 : 1;      // update temporary matrix, based on the rules in question
-            }else{ 
-                tempBoard[r][c] = (liveNeighbors == 3) ? 1 : 0;
+    public void gameOfLife(int[][] board) {
+        int rows = board.length;
+        int cols = board[0].length;
+
+        // Traversing the matrix to find current and next states
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                int count = 0;
+
+                // Left neighbour
+                if(j-1 >= 0 && (board[i][j-1] == 1 || board[i][j-1] == -1)){
+                    count++;
+                }
+
+                // Right neighbour
+                if(j+1 < cols && (board[i][j+1] == 1 || board[i][j+1] == -1)){
+                    count++;
+                }
+
+                // Top neighbour
+                if(i-1 >= 0 && (board[i-1][j] == 1 || board[i-1][j] == -1)){
+                    count++;
+                }
+
+
+                // Bottom neighbour
+                if(i+1 < rows && (board[i+1][j] == 1 || board[i+1][j] == -1)){
+                    count++;
+                }
+
+                // Left top diagnonal neighbour
+                if(i-1 >=0 && j-1 >= 0 && (board[i-1][j-1] == 1 || board[i-1][j-1] == -1)){
+                    count++;
+                }
+
+                // Right top diagnonal neighbour
+                if(i-1 >=0 && j+1 < cols && (board[i-1][j+1] == 1 || board[i-1][j+1] == -1)){
+                    count++;
+                }
+
+                // Left bottom diagnonal neighbour
+                if(i+1 < rows && j-1 >= 0 && (board[i+1][j-1] == 1 || board[i+1][j-1] == -1)){
+                    count++;
+                }
+
+                // Right bottom diagnonal neighbour
+                if(i+1 < rows && j+1 < cols && (board[i+1][j+1] == 1 || board[i+1][j+1] == -1)){
+                    count++;
+                }
+
+                // Checking according to game conditions and marking the element
+                if(board[i][j] == 0 && count == 3){
+                    board[i][j] = 2;    // Marking birth
+                }
+                if(board[i][j] == 1 && (count < 2 || count > 3)){
+                    board[i][j] = -1; // Marking death
+                }
+            }
+        }
+
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                if(board[i][j] == -1){
+                    board[i][j] = 0;
+                }
+                else if(board[i][j] == 2){
+                    board[i][j] = 1;
+                }
             }
         }
     }
-    
-    for(int r = 0; r < rows; r++){
-        board[r] = tempBoard[r].clone();                                                // copy all tempBoard elements back to board matrix
-    }
-}
-
-// ----------------------------------------------------------------------- //
-public int neighbor(int[][] board, int r, int c){
-    if( r < 0 || r >= board.length || c < 0 || c >= board[0].length || board[r][c] == 0 ){ return 0; }                          // out of bound cases
-    return 1;
-}
 }
