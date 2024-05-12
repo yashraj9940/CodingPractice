@@ -13,7 +13,7 @@ class Solution {
          if (h == null) return null;
         ListNode o=h,e=h.next,eh=e;
         while(o.next!=null && e.next!=null){
-            System.out.println(e.val);
+          
             o.next=o.next.next;
             e.next=e.next.next;
             o=o.next;
