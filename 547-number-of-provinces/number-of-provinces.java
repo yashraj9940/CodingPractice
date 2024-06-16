@@ -5,8 +5,8 @@ class Solution {
         boolean[] visited = new boolean[noOfNodes]; 
         for (int i = 0; i < noOfNodes; i++) {
             if (!visited[i]) {
-                dfs(isConnected, visited, i);
                 count++;
+                dfs(isConnected, visited, i);
             }
         }
         return count;
