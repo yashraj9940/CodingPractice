@@ -28,7 +28,7 @@ class Solution {
             int i=q.peek().first;
             int j=q.peek().second;
             int t=q.peek().time;
-            max=Math.max(max,t);
+            max=t;
             q.remove();
             lookneighbour(q,vis,grid,i-1,j,r,c,t);
             lookneighbour(q,vis,grid,i,j-1,r,c,t);
