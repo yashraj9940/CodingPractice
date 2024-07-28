@@ -28,7 +28,7 @@ class Solution {
         {
             for(j =0;j<m;j++)
             {
-                if(board[i][j] == 1 && check[i][j] == 0 )
+                if(board[i][j] == 1 && !visited[i][j] )
                 ans++;
             }
         }
