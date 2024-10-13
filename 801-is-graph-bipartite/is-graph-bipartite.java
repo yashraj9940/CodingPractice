@@ -11,11 +11,11 @@ class Solution {
         return true;
     }
     static boolean check(int start , int V , int[][] adj , int[] color){
-            Queue<Integer> queue = new LinkedList<>();
+            Queue<Integer> queue = new ArrayDeque<>();
             queue.add(start);
             color[start] = 0;
             while(!queue.isEmpty()){
-            int poped = queue.remove();
+            int poped = queue.poll();
             int currColor = color[poped];
             for(int element : adj[poped]){
                 int x = color[element];
