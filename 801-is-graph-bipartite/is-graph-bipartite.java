@@ -1,24 +1,30 @@
 class Solution {
     public boolean isBipartite(int[][] graph) {
-        // Solving using DFS
-        int n = graph.length;
-        int[] visited = new int[n];
-        for(int i = 0; i < n;i++) visited[i] = -1;
-        for(int i = 0; i < n;i++){
-            if(visited[i] == -1){
-                // visited[i] = 0;
-                if(!dfs(i , visited , graph , 0)) return false;
+        int V = graph.length;
+        int[] color = new int[V];
+        for(int i = 0; i < V;i++) color[i] = -1; 
+        for(int i = 0; i < V;i++){
+            if(color[i] == -1){
+                if(!check(i , V , graph , color)) return false;
             }
         }
         return true;
     }
-    static boolean dfs(int iy , int[] visited , int[][] graph , int start){
-        visited[iy] = start;
-        for(int i : graph[iy]){
-            if(visited[i] == -1){
-                if(!dfs(i , visited , graph , 1-start)) return false;
+    static boolean check(int start , int V , int[][] adj , int[] color){
+            Queue<Integer> queue = new ArrayDeque<>();
+            queue.add(start);
+            color[start] = 0;
+            while(!queue.isEmpty()){
+            int poped = queue.poll();
+            int currColor = color[poped];
+            for(int element : adj[poped]){
+                int x = color[element];
+                if(x == -1){
+                    color[element] = 1-currColor;
+                    queue.add(element);
+                }
+                else if(x == currColor) return false;
             }
-            else if(visited[i] == start) return false;
         }
         return true;
     }
