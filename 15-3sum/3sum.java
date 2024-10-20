@@ -4,9 +4,7 @@ class Solution {
         List<List<Integer>> ans=new ArrayList<List<Integer>>();
         int len=nums.length;
         for(int i=0;i<len-2;i++){
-             if (i > 0 && nums[i] == nums[i - 1]) {
-                continue;
-            }
+           
 
             int l=i+1,h=len-1;;
             while(l<h && nums[i]<=0){
@@ -36,7 +34,12 @@ class Solution {
                 else{
                     l++;
                 }           
-            }           
+            }   
+
+              while (i<len-2 && nums[i] == nums[i + 1]) {
+                i++;
+            }
+
         }
         return ans;
         
