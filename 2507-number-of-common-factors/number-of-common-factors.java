@@ -16,9 +16,16 @@ class Solution {
 
      int divisors(int a){
         int num=0;
-        for(int i=1;i<=a;i++){
+        for(int i=1;i<=Math.sqrt(a);i++){
             if(a%i==0){
-                num++;
+                if(a/i==i){
+                        num++;
+                }
+                else
+                {
+                    num=num+2;
+                }
+            
             }
         }
         return num;
