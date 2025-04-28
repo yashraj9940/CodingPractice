@@ -1,13 +1,11 @@
 class Solution {
-    
     public int subsetXORSum(int[] nums) {
-        return getAns(nums,0,0);
-    }
-    
-    int getAns(int[] arr,int i,int cur){
-        if(i==arr.length){
-            return cur;
+        int result = 0;
+        // Capture each bit that is set in any of the elements
+        for (int num : nums) {
+            result |= num;
         }
-        return getAns(arr,i+1,cur^arr[i]) + getAns(arr,i+1,cur);
+        // Multiply by the number of subset XOR totals that will have each bit set
+        return result << (nums.length - 1);
     }
 }
