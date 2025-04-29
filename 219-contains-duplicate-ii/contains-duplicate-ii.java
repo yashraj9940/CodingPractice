@@ -1,31 +1,20 @@
 class Solution {
 
-    // Approach:
-    // Using sliding window technique.
-    // Traversing from left to right, we use a HashSet to store the integers that we saw.
-    // If the same integer is seen again, we have found the duplicate.
-    // Then, we update the window again to be within 'k' index from 'index'.
+  //Explanation: It iterates over the array using a sliding window.
+// The front of the window is at i, the rear of the window is k steps back.
+// The elements within that window are maintained using a Set.
+// While adding new element to the set, if add() returns false, 
+/* it means the element already exists in the set. At that point, we return true. 
+ 4If the control reaches out of for loop, it means that inner return true never executed, 
+ meaning no such duplicate element was found. Then, we update the window again to be within 'k' index from 'index'.*/
 
-    public boolean containsNearbyDuplicate(int[] nums, int k) {
-        // If k is 0, then i and j cannot be distinct.
-        if (k == 0) return false;
-
-        // Set up the HashSet.
-        Set<Integer> slidingWindow = new HashSet<>();
-
-        // Start sliding the slidingWindow to the right.
-        for (int index = 0; index < nums.length; index++) {
-            // Return true when found duplicates in the slidingWindow.
-            if (slidingWindow.contains(nums[index]))
-                return true;
-
-            // Update the state of the window, but removing the leftmost integer and add the new integer.
-            if (index >= k)
-                slidingWindow.remove(nums[index - k]);
-
-            slidingWindow.add(nums[index]);
+  public boolean containsNearbyDuplicate(int[] nums, int k) {
+        Set<Integer> set = new HashSet<Integer>();
+        for(int i = 0; i < nums.length; i++){
+            if(i > k) set.remove(nums[i-k-1]);
+            if(!set.add(nums[i])) return true;
         }
-        // If successfully traverse the whole array, meaning we fail to find any integers fulfilling the conditions.
         return false;
-    }
+ }
 }
+
