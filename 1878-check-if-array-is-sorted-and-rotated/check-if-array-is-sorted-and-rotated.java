@@ -9,11 +9,8 @@ class Solution {
             if(nums[i]>max)
                 return false;
             
-            if(nums[i-1]<=nums[i]){
-                inc++;
-            }
-            else{
-            
+            if(!(nums[i-1]<=nums[i])){
+                     
                     max=nums[0];
                       if(nums[i]>max)
                              return false;
