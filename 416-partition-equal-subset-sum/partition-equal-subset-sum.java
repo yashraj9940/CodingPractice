@@ -11,16 +11,11 @@ class Solution {
         int size=nums.length;
         
         boolean[][] a=new boolean[size+1][sum+1];
-        for(int i=0;i<size;i++){
-            for(int j=0;j<sum;j++){
-                if(i==0){
-                    a[i][j]=false;
-                }
-                 if(j==0){
-                    a[i][j]=true;
-                }
-            }
+        
+          for (int i = 0; i <= size; i++) {
+            a[i][0] = true;
         }
+
 
         for(int i=1;i<=size;i++){
             for(int j=0;j<=sum;j++){
