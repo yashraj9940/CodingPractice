@@ -1,27 +1,20 @@
 class Solution {
     public int[] productExceptSelf(int[] nums) {
-        int l=nums.length;
-        int s[]=new int[l];
-        int[] p=new int[l];
+        int[] result = new int[nums.length];
+        int suffix = 1;
+        result[0] = 1;
 
-        s[l-1]=nums[l-1];
-        for(int i=l-2;i>=0;i--){
-            s[i]=s[i+1]*nums[i];
-        }
-         p[0]=nums[0];
-        for(int i=1;i<l;i++){
-            p[i]=p[i-1]*nums[i];
-        }
-        int a[]=new int[l];
-        a[0]=s[1];
-        a[l-1]=p[l-2];
-        for(int i=1;i<l-1;i++){
-            a[i]=p[i-1]*s[i+1];
+        //parse and calculate left to right prefix values
+        for(int i = 1;i<nums.length;i++){
+            result[i] = result[i-1]*nums[i-1];
         }
 
-        return a;
+        //parse and get the values of from right to left
+        for(int i = nums.length-1;i>=0;i--){
+            result[i] = result[i] * suffix;
+            suffix *= nums[i];
+        }
 
-
-        
+        return result;
     }
 }
