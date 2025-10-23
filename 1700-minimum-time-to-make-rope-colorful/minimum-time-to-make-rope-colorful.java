@@ -5,8 +5,8 @@ class Solution {
             if(i>0 && colors.charAt(i)!=colors.charAt(i-1)){
                 prev=0;
             }
-            t=t+((prev>neededTime[i])?neededTime[i]:prev);
-            prev=(prev<neededTime[i])?neededTime[i]:prev; 
+            t=t+Math.min(neededTime[i],prev);
+            prev=Math.max(neededTime[i],prev); 
 
         }
         return t;
