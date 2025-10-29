@@ -1,10 +1,9 @@
 class Solution {
     public int smallestNumber(int n) {
-        int a = 1, i = 1;
-        while (a < n) {
-            a += (int) Math.pow(2, i);
+        int i = 0;
+        while ((1 << (i + 1)) - 1 < n) {
             i++;
         }
-        return a;
+        return (1 << (i + 1)) - 1;
     }
 }
