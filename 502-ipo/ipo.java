@@ -1,42 +1,48 @@
-import java.util.Arrays;
-import java.util.PriorityQueue;
-import java.util.Collections;
-
 class Solution {
+    // Defining the Project class within the Solution class
+    private static class Project {
+        int capital;
+        int profit;
+
+        Project(int capital, int profit) {
+            this.capital = capital;
+            this.profit = profit;
+        }
+    }
+
     public int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
         int n = profits.length;
-        
-        // Step 1: Combine capital and profits into a 2D array for easy sorting
-        int[][] projects = new int[n][2];
+        List<Project> projects = new ArrayList<>();
+
+        // Creating list of projects with capital and profits
         for (int i = 0; i < n; i++) {
-            projects[i][0] = capital[i]; // Capital requirement
-            projects[i][1] = profits[i]; // Profit
+            projects.add(new Project(capital[i], profits[i]));
         }
-        
-        // Step 2: Sort projects by their capital requirements in ascending order
-        Arrays.sort(projects, (a, b) -> Integer.compare(a[0], b[0]));
-        
-        // Step 3: Max-heap to store the profits of affordable projects
-        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
-        
+
+        // Sorting projects by capital required
+        Collections.sort(projects, (a, b) -> a.capital - b.capital);
+
+        // Max-heap to store profits (using a min-heap with inverted values)
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((x, y) -> y - x);
         int i = 0;
-        // Step 4: Perform at most 'k' projects
+
+        // Main loop to select up to k projects
         for (int j = 0; j < k; j++) {
-            // Add all projects we can afford with our current capital 'w' into the max-heap
-            while (i < n && projects[i][0] <= w) {
-                maxHeap.add(projects[i][1]);
+            // Add all profitable projects that we can afford
+            while (i < n && projects.get(i).capital <= w) {
+                maxHeap.add(projects.get(i).profit);
                 i++;
             }
-            
-            // If we can't afford any more projects, break out early
+
+            // If no projects can be funded, break out of the loop
             if (maxHeap.isEmpty()) {
                 break;
             }
-            
-            // Greedily pick the project with the maximum profit available
+
+            // Otherwise, take the project with the maximum profit
             w += maxHeap.poll();
         }
-        
+
         return w;
     }
 }
